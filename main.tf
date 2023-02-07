@@ -33,22 +33,30 @@ resource "aws_security_group" "sg" {
   }
 }
 
-data "template_file" "test" {
-  template = <<EOF
-    mkdir /testing/test
-  EOF
-}
-
 // EC2
 resource "aws_instance" "ec2" {
   ami                    = var.ami
   instance_type          = var.instance_type
-#   iam_instance_profile   = aws_iam_instance_profile.profile.name
   key_name               = aws_key_pair.default.key_name
   vpc_security_group_ids = [aws_security_group.sg.id]
-  #user_data       = filebase64("./user_data.sh")
-  user_data =  data.template_file.test.rendered
 }
+
+resource null_resource name {
+  # triggers = {
+  #   trigger = value
+  # }
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = file("~/.ssh/t-docker")
+    host        = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    command = "sudo apt update -y"
+  }
+}
+
 
 
 
