@@ -53,7 +53,10 @@ resource null_resource name {
   }
 
   provisioner "remote-exec" {
-    command = "sudo apt update -y"
+    inline = [
+      "sudo apt update -y"
+
+    ]
   }
 }
 
