@@ -33,6 +33,12 @@ resource "aws_security_group" "sg" {
   }
 }
 
+data "template_file" "test" {
+  template = <<EOF
+    mkdir testing
+  EOF
+}
+
 // EC2
 resource "aws_instance" "ec2" {
   ami                    = var.ami
@@ -40,6 +46,9 @@ resource "aws_instance" "ec2" {
 #   iam_instance_profile   = aws_iam_instance_profile.profile.name
   key_name               = aws_key_pair.default.key_name
   vpc_security_group_ids = [aws_security_group.sg.id]
-  user_data       = filebase64("./user_data.sh")
+  #user_data       = filebase64("./user_data.sh")
+  user_data = "${base64encode(data.template_file.test.rendered)}"
 }
+
+
 
