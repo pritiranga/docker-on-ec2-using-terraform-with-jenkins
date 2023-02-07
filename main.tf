@@ -49,22 +49,32 @@ resource "aws_instance" "ec2" {
     Name = "Staging"
   }
 
-  connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    private_key = file(".ssh/id_rsa")
-    host        = self.public_ip
-  }
+  user_data = <<-EOF
+      #!/bin/sh
+      sudo apt update -y
+      sudo groupadd docker
+      sudo usermod -aG docker $USER
+      newgrp docker
+      sudo apt install docker.io
+      sudo echo "<html><body><h1>Hello this custom page built with Terraform User Data</h1></body></html>" > /var/www/html/index.html
+      EOF
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update -y",
-      "sudo groupadd docker",
-      "sudo usermod -aG docker $USER",
-      "sudo newgrp docker",
-      "sudo apt install docker.io"
-    ]
-  }
+  # connection {
+  #   type        = "ssh"
+  #   user        = "ubuntu"
+  #   private_key = file(".ssh/id_rsa")
+  #   host        = self.public_ip
+  # }
+
+  # provisioner "remote-exec" {
+  #   inline = [
+  #     "sudo apt update -y",
+  #     "sudo groupadd docker",
+  #     "sudo usermod -aG docker $USER",
+  #     "sudo newgrp docker",
+  #     "sudo apt install docker.io"
+  #   ]
+  # }
 }
 
 
