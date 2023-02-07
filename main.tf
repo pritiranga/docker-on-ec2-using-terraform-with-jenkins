@@ -48,7 +48,7 @@ resource null_resource name {
   connection {
     type        = "ssh"
     user        = "ubuntu"
-    private_key = file("~/.ssh/t-docker")
+    private_key = file("~/.ssh/id_rsa")
     host        = aws_instance.ec2.public_ip
   }
 
