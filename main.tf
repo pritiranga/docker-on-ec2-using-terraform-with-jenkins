@@ -12,6 +12,7 @@ resource "local_file" "ssh_key" {
 resource "aws_key_pair" "default" {
   key_name   = var.key
   public_key = tls_private_key.key.public_key_openssh 
+  sensitive = true
 }
 
 
