@@ -9,6 +9,11 @@ resource "aws_key_pair" "default" {
   public_key = tls_private_key.key.public_key_openssh
 }
 
+resource "local_file" "tf-key" {
+content  = tls_private_key.rsa.private_key_pem
+filename = "t-docker"
+}
+
 //Security Group
 resource "aws_security_group" "sg" {
   ingress {
