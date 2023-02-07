@@ -65,22 +65,22 @@ resource "aws_instance" "ec2" {
   #     sudo echo "Terraform User Data"
   #   EOF
 
-  connection {
-    type        = "ssh"
-    user        = "ubuntu"
-    private_key = file(".ssh/id_rsa")
-    host        = self.public_ip
-  }
+  # connection {
+  #   type        = "ssh"
+  #   user        = "ubuntu"
+  #   private_key = file(".ssh/id_rsa")
+  #   host        = self.public_ip
+  # }
 
-  provisioner "remote-exec" {
-    inline = [
-      "sudo apt update -y",
-      "sudo groupadd docker",
-      "sudo usermod -aG docker $USER",
-      "sudo newgrp docker",
-      "sudo apt install docker.io"
-    ]
-  }
+  # provisioner "remote-exec" {
+  #   inline = [
+  #     "sudo apt update -y",
+  #     "sudo groupadd docker",
+  #     "sudo usermod -aG docker $USER",
+  #     "sudo newgrp docker",
+  #     "sudo apt install docker.io"
+  #   ]
+  # }
 }
 
 
