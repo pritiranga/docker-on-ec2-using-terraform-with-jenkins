@@ -11,7 +11,7 @@ variable "instance_type" {
 }
 
 variable "key" {
-  default = "t-docker"
+  default = "task-demo"
 }
 
 variable "bucket-name" {

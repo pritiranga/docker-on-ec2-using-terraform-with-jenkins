@@ -56,8 +56,8 @@ resource "aws_instance" "ec2" {
       sudo usermod -aG docker $USER
       newgrp docker
       sudo apt install docker.io
-      sudo echo "<html><body><h1>Hello this custom page built with Terraform User Data</h1></body></html>" > /var/www/html/index.html
-      EOF
+      sudo echo "Terraform User Data"
+    EOF
 
   # connection {
   #   type        = "ssh"
