@@ -7,18 +7,13 @@ resource "tls_private_key" "key" {
 resource "aws_key_pair" "default" {
   key_name   = var.key
   public_key = tls_private_key.key.public_key_openssh 
-  
-  provisioner "local-exec" { # Create a "myKey.pem" to your computer!!
-    command = "echo '${tls_private_key.key.private_key_pem}' > ./docker.pem"
-  }
-
 }
 
+resource "local_file" "ssh_key" {
+  filename = "${aws_key_pair.default.key_name}.pem"
+  content = tls_private_key.key.private_key_pem
+}
 
-# resource "local_file" "tf-key" {
-# content  = tls_private_key.key.private_key_pem
-# filename = "docker"
-# }
 
 //Security Group
 resource "aws_security_group" "sg" {
