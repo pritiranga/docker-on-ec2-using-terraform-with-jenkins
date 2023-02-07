@@ -25,7 +25,7 @@ pipeline{
 			steps{
 				sh 'terraform plan'
                 // sh 'terraform untaint aws_security_group.sg'
-                sh 'terraform untaint aws_instance.ec2'
+                // sh 'terraform untaint aws_instance.ec2'
 			}
 		}
 
