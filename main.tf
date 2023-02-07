@@ -40,6 +40,6 @@ resource "aws_instance" "ec2" {
 #   iam_instance_profile   = aws_iam_instance_profile.profile.name
   key_name               = aws_key_pair.default.key_name
   vpc_security_group_ids = [aws_security_group.sg.id]
-  user_data_base64       = base644encode("./user_data.sh")
+  user_data_base64       = base64decode("./user_data.sh")
 }
 
