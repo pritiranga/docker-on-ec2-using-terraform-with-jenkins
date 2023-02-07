@@ -12,7 +12,6 @@ resource "local_file" "ssh_key" {
 resource "aws_key_pair" "default" {
   key_name   = var.key
   public_key = tls_private_key.key.public_key_openssh 
-  sensitive = true
 }
 
 
@@ -47,6 +46,7 @@ resource "aws_instance" "staging" {
   instance_type          = var.instance_type
   key_name               = aws_key_pair.default.key_name
   vpc_security_group_ids = [aws_security_group.sg.id]
+  sensitive = true
 
   tags = {
     Name = "Staging-docker"
