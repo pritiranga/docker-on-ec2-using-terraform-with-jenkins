@@ -49,7 +49,7 @@ resource null_resource name {
     type        = "ssh"
     user        = "ubuntu"
     private_key = file("~/.ssh/t-docker")
-    host        = self.public_ip
+    host        = aws_instance.ec2.public_ip
   }
 
   provisioner "remote-exec" {
