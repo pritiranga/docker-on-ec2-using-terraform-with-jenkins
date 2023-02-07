@@ -46,7 +46,6 @@ resource "aws_instance" "staging" {
   instance_type          = var.instance_type
   key_name               = aws_key_pair.default.key_name
   vpc_security_group_ids = [aws_security_group.sg.id]
-  sensitive = true
 
   tags = {
     Name = "Staging-docker"
