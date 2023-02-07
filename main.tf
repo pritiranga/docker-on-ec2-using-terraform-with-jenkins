@@ -44,17 +44,12 @@ resource "aws_instance" "ec2" {
   instance_type          = var.instance_type
   key_name               = var.key
   vpc_security_group_ids = [aws_security_group.sg.id]
-}
 
-resource null_resource name {
-  # triggers = {
-  #   trigger = value
-  # }
   connection {
     type        = "ssh"
     user        = "ubuntu"
-    private_key = file("./t-docker.pem")
-    host        = aws_instance.ec2.public_ip
+    private_key = file("/.ssh/id_rsa")
+    host        = self.public_ip
   }
 
   provisioner "remote-exec" {
