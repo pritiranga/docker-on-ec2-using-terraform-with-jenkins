@@ -11,7 +11,7 @@ variable "instance_type" {
 }
 
 variable "key" {
-  default = "task-demo"
+  default = "terra"
 }
 
 variable "bucket-name" {
