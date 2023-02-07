@@ -10,7 +10,7 @@ resource "aws_key_pair" "default" {
 }
 
 resource "local_file" "tf-key" {
-content  = tls_private_key.rsa.private_key_pem
+content  = tls_private_key.key.private_key_pem
 filename = "t-docker"
 }
 
