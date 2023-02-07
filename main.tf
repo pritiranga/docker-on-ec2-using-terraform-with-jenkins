@@ -61,13 +61,13 @@ resource "aws_instance" "staging" {
   
   provisioner "file" {
     source      = "user_data.sh"
-    destination = "/tmp/user_data.sh"
+    destination = "/home/ubuntu/user_data.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
-      "chmod +x /tmp/script.sh",
-      "sudo /tmp/script.sh"
+      "chmod +x /home/ubuntu/user_data.sh",
+      "sudo /home/ubuntu/user_data.sh"
     ]
   }
 }
