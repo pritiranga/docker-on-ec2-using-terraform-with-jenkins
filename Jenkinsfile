@@ -24,7 +24,7 @@ pipeline{
 		stage("Terraform plan"){
 			steps{
 				sh 'terraform plan'
-                sh 'terraform untaint tls_private_key.key'
+                // sh 'terraform untaint tls_private_key.key'
                 sh 'terraform untaint aws_key_pair.default'
                 sh 'terraform untaint aws_security_group.sg'
                 sh 'terraform untaint aws_instance.ec2'
