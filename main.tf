@@ -59,8 +59,11 @@ resource null_resource name {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt update -y"
-
+      "sudo apt update -y",
+      "sudo groupadd docker",
+      "sudo usermod -aG docker $USER",
+      "sudo newgrp docker",
+      "sudo apt install docker.io"
     ]
   }
 }
