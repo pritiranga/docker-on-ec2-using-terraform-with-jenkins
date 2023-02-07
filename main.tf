@@ -35,7 +35,7 @@ resource "aws_security_group" "sg" {
 
 data "template_file" "test" {
   template = <<EOF
-    mkdir testing
+    mkdir /testing/test
   EOF
 }
 
