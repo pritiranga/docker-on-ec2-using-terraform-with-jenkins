@@ -48,7 +48,7 @@ resource "aws_instance" "ec2" {
   connection {
     type        = "ssh"
     user        = "ubuntu"
-    private_key = file("/.ssh/id_rsa")
+    private_key = file("./t-docker.pem")
     host        = self.public_ip
   }
 
