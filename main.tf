@@ -45,6 +45,10 @@ resource "aws_instance" "ec2" {
   key_name               = var.key
   vpc_security_group_ids = [aws_security_group.sg.id]
 
+  tag = {
+    name = staging
+  }
+
   connection {
     type        = "ssh"
     user        = "ubuntu"
