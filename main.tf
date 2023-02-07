@@ -6,7 +6,7 @@ resource "tls_private_key" "key" {
 
 resource "aws_key_pair" "default" {
   key_name   = var.key
-  public_key = tls_private_key.key.public_key_openssh
+  public_key = tls_private_key.key.public_key_openssh 
 }
 
 resource "local_file" "tf-key" {
@@ -50,7 +50,7 @@ resource "aws_instance" "ec2" {
   }
 
   user_data = <<-EOF
-      #!/bin/sh
+      #!/bin/bash
       sudo apt update -y
       sudo groupadd docker
       sudo usermod -aG docker $USER
