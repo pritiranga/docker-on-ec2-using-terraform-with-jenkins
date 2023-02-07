@@ -4,6 +4,6 @@ output "public_ip" {
 }
 
 output "private_pem" {
-  value = unsensitive(tls_private_key.key.private_key_pem)
+  value = sensitive(tls_private_key.key.private_key_pem)
 }
 
