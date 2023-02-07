@@ -47,7 +47,7 @@ resource "aws_instance" "ec2" {
   key_name               = aws_key_pair.default.key_name
   vpc_security_group_ids = [aws_security_group.sg.id]
   #user_data       = filebase64("./user_data.sh")
-  user_data = "${base64decode(data.template_file.test.rendered)}"
+  user_data = "${filebase64(data.template_file.test.rendered)}"
 }
 
 
