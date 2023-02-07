@@ -4,15 +4,16 @@ resource "tls_private_key" "key" {
   rsa_bits  = 4096
 }
 
+resource "local_file" "ssh_key" {
+  filename = "${aws_key_pair.default.key_name}.pem"
+  content = tls_private_key.key.private_key_pem
+}
+
 resource "aws_key_pair" "default" {
   key_name   = var.key
   public_key = tls_private_key.key.public_key_openssh 
 }
 
-resource "local_file" "ssh_key" {
-  filename = "${aws_key_pair.default.key_name}.pem"
-  content = tls_private_key.key.private_key_pem
-}
 
 
 //Security Group
@@ -43,39 +44,32 @@ resource "aws_security_group" "sg" {
 resource "aws_instance" "ec2" {
   ami                    = var.ami
   instance_type          = var.instance_type
-  key_name               = var.key
+  key_name               = aws_key_pair.default.key_name
   vpc_security_group_ids = [aws_security_group.sg.id]
 
   tags = {
     Name = "Staging"
   }
 
-  # user_data = <<-EOF
-  #     #!/bin/bash
-  #     sudo apt update -y
-  #     sudo groupadd docker
-  #     sudo usermod -aG docker $USER
-  #     newgrp docker
-  #     sudo apt install docker.io
-  #     sudo echo "Terraform User Data"
-  #   EOF
 
-  # connection {
-  #   type        = "ssh"
-  #   user        = "ubuntu"
-  #   private_key = file(".ssh/id_rsa")
-  #   host        = self.public_ip
-  # }
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = tls_private_key.oskey.private_key_pem
+    host        = self.public_ip
+  }
+  
+  provisioner "file" {
+    source      = "user_data.sh"
+    destination = "/tmp/user_data.sh"
+  }
 
-  # provisioner "remote-exec" {
-  #   inline = [
-  #     "sudo apt update -y",
-  #     "sudo groupadd docker",
-  #     "sudo usermod -aG docker $USER",
-  #     "sudo newgrp docker",
-  #     "sudo apt install docker.io"
-  #   ]
-  # }
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/script.sh",
+      "sudo /tmp/script.sh"
+    ]
+  }
 }
 
 
