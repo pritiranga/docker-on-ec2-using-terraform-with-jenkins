@@ -28,3 +28,14 @@ sudo apt-get upgrade -y
 sudo apt install docker.io -y
 sudo usermod -aG docker ubuntu
 
+docker run \
+-d \
+--name newrelic-infra \
+--network=host \
+--cap-add=SYS_PTRACE \
+--privileged \
+--pid=host \
+-v "/:/host:ro" \
+-v "/var/run/docker.sock:/var/run/docker.sock" \
+-e NRIA_LICENSE_KEY=210f44d86dec92470f1e0c92ed1641ebd15dNRAL \
+newrelic/infrastructure:latest
